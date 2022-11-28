@@ -1,12 +1,15 @@
-from flask import Flask
+from configparser import ConfigParser
+from os import path
 
-app = Flask(__name__)
+from group_expense_tracker.app import create_app
 
+config = ConfigParser()
+config.read([
+    path.abspath('config.ini'),
+    path.abspath('sample_config.ini')
+])
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
+app = create_app(config['DEFAULT'])
 
 if __name__ == '__main__':
     app.run()
