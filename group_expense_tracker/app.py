@@ -5,6 +5,7 @@ from .db import mongo
 from .groups.Group import Group
 from .groups.Groups import Groups
 from .groups.GroupMembers import GroupMembers
+from .authentification.Authentification import Authentification
 
 
 def create_app(config):
@@ -21,5 +22,6 @@ def create_app(config):
     api.add_resource(Groups, '/api/groups')
     api.add_resource(Group, '/api/groups/<string:uuid>')
     api.add_resource(GroupMembers, '/api/groups/<string:uuid>/members')
+    api.add_resource(Authentification,'/api/authentification')
 
     return app
