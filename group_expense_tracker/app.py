@@ -22,6 +22,7 @@ def create_app(config):
     api.add_resource(Groups, '/api/groups')
     api.add_resource(Group, '/api/groups/<string:uuid>')
     api.add_resource(GroupMembers, '/api/groups/<string:uuid>/members')
-    api.add_resource(Authentification,'/api/authentification')
+    #Create a new Account
+    api.add_resource(Authentification,'/api/auth')
 
     return app
