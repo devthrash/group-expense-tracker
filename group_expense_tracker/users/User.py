@@ -5,8 +5,8 @@ from ..db import mongo
 from ..decorators import authenticate
 
 
-class Group(Resource):
+class User(Resource):
     method_decorators = [authenticate]
 
     def get(self, uuid):
-        return jsonify({'result': mongo.groups.find_one_or_404({'uuid': uuid}, {'_id': 0})})
+        return jsonify({'result': mongo.users.find_one_or_404({'uuid': uuid}, {'_id': 0, 'password': 0})})
