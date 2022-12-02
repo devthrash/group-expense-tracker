@@ -2,7 +2,7 @@ from flask import jsonify, g
 from flask_restful import Resource, reqparse
 from uuid import uuid4
 
-from ..db import mongo
+from ..mongo import mongo
 from ..decorators import authenticate
 
 parser = reqparse.RequestParser()
@@ -10,18 +10,18 @@ parser.add_argument('name', type=str, required=True)
 parser.add_argument('members', type=str, required=True, action='append')
 
 
-class Groups(Resource):
+class GroupsList(Resource):
     method_decorators = [authenticate]
 
     def get(self):
-        docs = [doc for doc in mongo.groups.find({'created_by': g['logged_in_user']}, {'_id': 0})]
+        docs = [doc for doc in mongo.groups.find({'created_by': g.logged_in_user}, {'_id': 0})]
 
         return jsonify({
             'results': {'groups': docs}
         })
 
     def post(self):
-        creator_email = g['logged_in_user']
+        creator_email = g.logged_in_user
         params = parser.parse_args()
 
         doc = {

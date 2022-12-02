@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask_restful import Resource
 
-from ..db import mongo
+from ..mongo import mongo
 from ..decorators import authenticate
 
 

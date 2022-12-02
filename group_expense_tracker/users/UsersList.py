@@ -4,7 +4,7 @@ from uuid import uuid4
 
 import hashlib
 
-from ..db import mongo
+from ..mongo import mongo
 from ..exceptions import EmailAlreadyRegistered
 
 parser = reqparse.RequestParser()

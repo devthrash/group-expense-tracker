@@ -1,7 +1,7 @@
 from functools import wraps
 
 import jwt
-from flask import request, g
+from flask import request, current_app, g
 
 from .exceptions import UnauthorizedException
 
@@ -15,11 +15,11 @@ def authenticate(func):
             raise UnauthorizedException
 
         try:
-            decoded = jwt.decode(token.replace('Bearer ', ''), 'secret', algorithms=['HS256'])  # @todo read secret from config
+            decoded = jwt.decode(token.replace('Bearer ', ''), current_app.config['JWT_SECRET'], algorithms=['HS256'])
         except jwt.DecodeError:
             raise UnauthorizedException
 
-        g['logged_in_user'] = decoded['sub']  # @todo clear this value after request is finished
+        g.logged_in_user = decoded['sub']  # @todo clear this value after request is finished
         return func(*args, **kwargs)
 
     return wrapper

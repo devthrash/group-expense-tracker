@@ -1,14 +1,14 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
 
-from ..db import mongo
+from ..mongo import mongo
 from ..decorators import authenticate
 
 parser = reqparse.RequestParser()
 parser.add_argument('email', type=str, required=True)
 
 
-class GroupMembers(Resource):
+class GroupMembersList(Resource):
     method_decorators = [authenticate]
 
     def post(self, uuid):

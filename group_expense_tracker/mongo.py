@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo
 from werkzeug.local import LocalProxy
 
 
-def get_db():
+def get_mongo():
     mongo_instance = getattr(g, 'mongodb', None)
 
     if mongo_instance is None:
@@ -12,4 +12,4 @@ def get_db():
     return mongo_instance
 
 
-mongo = LocalProxy(get_db)
+mongo = LocalProxy(get_mongo)
