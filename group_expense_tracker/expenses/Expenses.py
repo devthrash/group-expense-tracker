@@ -2,6 +2,8 @@ from flask import jsonify, redirect, url_for
 from flask_restful import Resource, reqparse
 from uuid import uuid4
 
+from ..decorators import authenticate
+
 from ..mongo import mongo
 
 parser = reqparse.RequestParser()
@@ -11,6 +13,7 @@ parser.add_argument('group', type=str, required=False)
 
 
 class Expenses(Resource):
+    method_decorators = [authenticate]
     def get(self):
         creator_email = 'test@example.com'
 

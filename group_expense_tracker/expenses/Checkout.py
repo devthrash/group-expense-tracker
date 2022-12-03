@@ -2,11 +2,13 @@ from flask import jsonify
 from flask_restful import Resource, reqparse
 
 from ..mongo import mongo
+from ..authentification import authenticate
 
 parser = reqparse.RequestParser()
 parser.add_argument('checked_out', type=bool, required=True)
 
 class Checkout(Resource):
+    method_decorators = [authenticate]
     def post(self, uuid):
         params = parser.parse_args()
 
