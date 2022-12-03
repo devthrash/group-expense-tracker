@@ -12,4 +12,5 @@ Werkzeug==2.2.2
 zipp==3.11.0
 Flask-PyMongo
 flask_restful
+Flask-Mail
 PyJWT~=1.4.2
