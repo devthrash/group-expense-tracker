@@ -2,7 +2,7 @@ from flask import jsonify
 from flask_restful import Resource, reqparse
 
 from ..mongo import mongo
-from ..authentification import authenticate
+from ..decorators import authenticate
 
 parser = reqparse.RequestParser()
 parser.add_argument('checked_out', type=bool, required=True)

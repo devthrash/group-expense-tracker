@@ -2,7 +2,7 @@ from flask import jsonify
 from flask_restful import Resource
 
 from ..mongo import mongo
-from ..authentification import authenticate
+from ..decorators import authenticate
 
 
 class Expense(Resource):
