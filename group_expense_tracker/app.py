@@ -29,6 +29,10 @@ def create_app(config):
         'EmailAlreadyRegistered': {
             'message': 'Email is already in use',
             'status': 400
+        },
+        'InvalidUserEmailException': {
+            'message': 'Invalid user email',
+            'status': 400
         }
     }
 

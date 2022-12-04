@@ -7,3 +7,7 @@ class UnauthorizedException(HTTPException):
 
 class EmailAlreadyRegistered(HTTPException):
     pass
+
+
+class InvalidUserEmailException(HTTPException):
+    pass
