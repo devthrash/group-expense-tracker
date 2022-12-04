@@ -2,6 +2,7 @@ from flask import jsonify, g
 from flask_restful import Resource, reqparse
 from uuid import uuid4
 
+from ..exceptions import InvalidUserEmailException
 from ..mongo import mongo
 from ..decorators import authenticate
 
@@ -35,8 +36,12 @@ class GroupsList(Resource):
         }
 
         for email in params['members']:
-            # todo read from users/accounts collection or whatever
-            doc['members'].append({'email': email, 'name': 'Nume'})
+            user = mongo.users.find_one({'email': email})
+
+            if user is None:
+                raise InvalidUserEmailException
+            else:
+                doc['members'].append({'email': user['email'], 'name': user['name']})
 
         mongo.groups.insert_one(doc)
 
