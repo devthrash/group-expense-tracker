@@ -14,12 +14,18 @@ from .users.User import User
 from .expenses.Expense import Expense
 from .expenses.Expenses import Expenses
 from .expenses.Checkout import Checkout
+from .expenses.Notify import Notify
 
 
 def create_app(config):
     app = Flask(__name__)
     app.config['MONGO_URI'] = config['DB_URI']
     app.config['JWT_SECRET'] = config['JWT_SECRET']
+    app.config['MAIL_SERVER'] = config['MAIL_SERVER']
+    app.config['MAIL_PORT'] = config['MAIL_PORT']
+    app.config['MAIL_USERNAME'] = config['MAIL_USERNAME']
+    app.config['MAIL_PASSWORD'] = config['MAIL_PASSWORD']
+    app.config['MAIL_USE_TLS'] = config['MAIL_USE_TLS']
 
     errors = {
         'UnauthorizedException': {
@@ -47,21 +53,6 @@ def create_app(config):
     api.add_resource(Expenses, '/api/expenses/')
     api.add_resource(Expense, '/api/expense/<string:uuid>')
     api.add_resource(Checkout, '/api/checkout/<string:uuid>')
-    
-    @app.route('/notify-expense')
-    def notify_expense():
+    api.add_resource(Notify, '/api/notify/<string:uuid>')
         
-        query = {'uuid': request.args.get('group_uuid')}
-
-        # check if doc exists
-        mongo.groups.find_one_or_404(query, {'_id': 1})
-        
-        email_recipients = mongo.groups.find_one(query, {'members': 1})['members']
-        
-        msg = Message('Hello from the other side!', recipients = email_recipients)
-        msg.body = "Someone has added you to a group"
-        mail.send(msg)
-        return "Message sent!"
-        
-
     return app

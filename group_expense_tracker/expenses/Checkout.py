@@ -18,8 +18,8 @@ class Checkout(Resource):
         mongo.expenses.find_one_or_404(query, {'_id': 1})
 
         # update group
-        mongo.expenses.update_one(query, {'$push': {'checked_out': params['checked_out']}})
+        mongo.expenses.update_one(query, {'$set': {'checked_out': params['checked_out']}})
 
         return jsonify({
-            'results': {'expenses': mongo.expenses.find_one(query,{'_id': 0})['expenses']}
+            'results': {'expenses': mongo.expenses.find_one(query,{'_id': 0})}
         })
