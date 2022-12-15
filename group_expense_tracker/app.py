@@ -53,6 +53,6 @@ def create_app(config):
     api.add_resource(Expenses, '/api/expenses/')
     api.add_resource(Expense, '/api/expense/<string:uuid>')
     api.add_resource(Checkout, '/api/checkout/<string:uuid>')
-    api.add_resource(Notify, '/api/notify/<string:uuid>')
+    api.add_resource(Notify, '/api/notify/')
         
     return app
