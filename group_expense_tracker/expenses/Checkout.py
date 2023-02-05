@@ -19,6 +19,11 @@ class Checkout(Resource):
 
         # update group
         mongo.expenses.update_one(query, {'$set': {'checked_out': params['checked_out']}})
+        mongo.groups.update_one({
+            'expenses.uuid': uuid
+        }, {
+            '$set': {'expenses.$.checked_out': params['checked_out']}
+        })
 
         return jsonify({
             'results': {'expenses': mongo.expenses.find_one(query,{'_id': 0})}
