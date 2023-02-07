@@ -12,14 +12,13 @@ from ..decorators import authenticate
 from ..mongo import mongo
 
 parser = reqparse.RequestParser()
-parser.add_argument('name', type=str, required=True)
+parser.add_argument('uuid', type=str, required=True)
 
 class Notify(Resource):
-    method_decorators = [authenticate]
     
     def post(self):
         params = parser.parse_args()
-        query = {'name': params['name']}
+        query = {'uuid': params['uuid']}
         
         members = mongo.groups.find_one(query)['members']
         
