@@ -5,3 +5,6 @@ __pycache__/
 
 .env
 config.ini
+
+node_modules
+dist

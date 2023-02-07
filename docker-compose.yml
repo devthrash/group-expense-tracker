@@ -11,6 +11,18 @@ services:
       - "9000:9000"
     links:
       - mongo
+
+  app_proxy:
+    image: nginx:1.23.2
+    volumes:
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
+    environment:
+      API_HOST: app:9000
+    ports:
+      - "9090:80"
+    links:
+      - app
+
   mongo:
     image: mongo:5.0
     volumes:
@@ -25,6 +37,14 @@ services:
     command: mongod --bind_ip_all
     ports:
       - "27017:27017"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_HOST_ARG: http://localhost:9090
+    ports:
+      - "80:80"
 
 volumes:
   mongo_data:
